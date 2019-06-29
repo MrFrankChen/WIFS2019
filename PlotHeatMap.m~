@@ -1,0 +1,10 @@
+load('corrMatrix.mat');
+h = heatmap(corrMatrix, 1:5:29, 1:5:29);
+% h.Title = 'Heatmap for 29 features';
+h.XLabel = 'Feature ID (F_id)';
+h.YLabel = 'Feature ID (F_id)';
+% h.XDisplayLabels = {"1", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "29"};
+% h.YDisplayLabels = {"1", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "29"};
+% h.FontSize = 2;
+% saveas(h, "figures/HeatMapForHuman.eps", 'psc2');
+

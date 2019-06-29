@@ -1,0 +1,5 @@
+Classifier,Zero-effort Test,,Non Zero-effort Test,,% decrease,
+,mean EER,std EER,mean EER,std EER,mean EER,std EER
+SVM,0.114,0.054,0.082,0.113,28.3,-110.1
+Logistic Regression,0.119,0.055,0.080,0.092,32.8,-66.5
+Neural Network,0.109,0.067,0.083,0.123,24.5,-84.9

@@ -5,14 +5,14 @@ k = 1;
 for i = 1 : 89
     if (ismember(i, M))
 
-        Name = strcat("DataSets/HH/Test1/Test", num2str(i));
+        Name = strcat("Dataset/HH/Test1/Test", num2str(i));
         Name = strcat(Name, ".csv");
         Data = csvread(Name);
         
         S1 = Data(Data(:,30) == 0, :);
         S2 = Data(Data(:,30) == 1, :);
         
-        Name = strcat("DataSets/HH/Test2/Test", num2str(i));
+        Name = strcat("Dataset/HH/Test2/Test", num2str(i));
         Name = strcat(Name, ".csv");
         Data = csvread(Name);
         S3 = Data(Data(:,30) == 1, :);
@@ -48,7 +48,5 @@ for i = 1 : 89
         
         k = k + 1;
     end
-    
-    
-    
+
 end

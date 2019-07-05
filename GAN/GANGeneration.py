@@ -92,7 +92,7 @@ class GAN():
 
         return Model(img, validity)
 
-    def train(self, userid, epochs, batch_size=128, sample_interval=50):
+    def train(self, userid, numSamples, epochs, batch_size=128, sample_interval=50):
 
         # Load the dataset
         # (X_train, _), (_, _) = mnist.load_data()
@@ -139,19 +139,18 @@ class GAN():
             g_loss = self.combined.train_on_batch(noise, valid)
 
             # Plot the progress
-            print ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]" % (epoch, d_loss[0], 100*d_loss[1], g_loss))
+            print ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f] [UserID: %d]" % (epoch, d_loss[0], 100*d_loss[1], g_loss, userid))
 
             # If at save interval => save generated image samples
             if epoch > 100 and 100*d_loss[1] < 60:
-                self.sample_images(epoch, userid, num)
+                self.sample_images(epoch, userid, numSamples)
                 break
 
-    def sample_images(self, epoch, userid, num):
+    def sample_images(self, epoch, userid, numSamples):
         # r, c = 10, 10
         # noise = np.random.normal(0, 1, (r * c, self.latent_dim))
 
-        swipes = num
-        noise = np.random.normal(0, 1, (swipes, self.latent_dim))
+        noise = np.random.normal(0, 1, (numSamples, self.latent_dim))
         gen_imgs = self.generator.predict(noise)
 
         # Rescale images 0 - 1
@@ -175,15 +174,20 @@ class GAN():
 
 if __name__ == '__main__':
 
-    E = {121, 144, 161, 169, 170, 188, 195}
+    E = {121, 144, 161, 169, 170, 188, 195,
+    29, 67, 119, 122, 126, 159, 182, 183, 190, 
+    30, 38, 44, 45, 83, 88, 105, 145, 158, 184}
 
-    for i in range(191, 198):
+    N = np.loadtxt(open("Dataset/BigDataset/sample.csv","rb"),delimiter=",",skiprows=0) 
 
-        if i in E:
-            continue
-        else:
-            gan = GAN()
-            gan.train(userid = i, epochs=30000, batch_size=32, sample_interval=200)
+    # for i in range(134, 198):
 
-    # gan = GAN()
-    # gan.train(userid = 183, epochs=30000, batch_size=32, sample_interval=200)
+    #     if i in E:
+    #         continue
+    #     else:
+    #         gan = GAN()
+    #         gan.train(userid = i, numSamples = int(N[i-1]), epochs=30000, batch_size=32, sample_interval=200)
+
+    i = 98
+    gan = GAN()
+    gan.train(userid = i, numSamples = int(N[i-1]), epochs=30000, batch_size=32, sample_interval=200)

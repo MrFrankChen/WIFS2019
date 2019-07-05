@@ -1,0 +1,1 @@
+This feed forward neural network has 2 hidden layers with 10 neurons/layer.

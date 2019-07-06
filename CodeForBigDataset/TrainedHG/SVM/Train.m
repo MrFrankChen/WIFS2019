@@ -10,13 +10,11 @@ F4 = [27, 26, 15, 19];
 
 F0 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
 
-M = [1,3,6,8,14,16,23,26,28,29,33,35,38,46,53,58,67,75,77,81,82,89];
-
-for i = 1 : 89
-    if (ismember(i, M))
-
-        Name = strcat("Dataset/HG/Train/TrainHG", num2str(i));
-        TrainName = strcat(Name, ".csv");
+for i = 1 : 197
+    
+    Name = strcat("Dataset/HG/Train/TrainHG", num2str(i));
+    TrainName = strcat(Name, ".csv");
+    if exist(TrainName, 'file')
         TrainData = csvread(TrainName);
         [m1,n1] = size(TrainData);
         

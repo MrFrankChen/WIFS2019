@@ -10,23 +10,23 @@ F4 = [27, 26, 15, 19];
 
 F0 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
 
-M = [1,3,6,8,14,16,23,26,28,29,33,35,38,46,53,58,67,75,77,81,82,89];
+flag = 0;
 
+for i = 1 : 197
 
-for i = 1 : 89
-    if (ismember(i, M))
+    Name1 = strcat("TrainedHG/SVM/Model1F/Model", num2str(i));
+    Name21 = strcat("TrainedHG/SVM/Model2F1/Model", num2str(i));
+    Name22 = strcat("TrainedHG/SVM/Model2F2/Model", num2str(i));
+    Name4 = strcat("TrainedHG/SVM/Model4F/Model", num2str(i));
+    Name0 = strcat("TrainedHG/SVM/Model29F/Model", num2str(i));
 
-        Name1 = strcat("TrainedHG/SVM/Model1F/Model", num2str(i));
-        Name21 = strcat("TrainedHG/SVM/Model2F1/Model", num2str(i));
-        Name22 = strcat("TrainedHG/SVM/Model2F2/Model", num2str(i));
-        Name4 = strcat("TrainedHG/SVM/Model4F/Model", num2str(i));
-        Name0 = strcat("TrainedHG/SVM/Model29F/Model", num2str(i));
-        
-        ModelName1 = strcat(Name1, ".mat");
-        ModelName21 = strcat(Name21, ".mat");
-        ModelName22 = strcat(Name22, ".mat");
-        ModelName4 = strcat(Name4, ".mat");
-        ModelName0 = strcat(Name0, ".mat");
+    ModelName1 = strcat(Name1, ".mat");
+    ModelName21 = strcat(Name21, ".mat");
+    ModelName22 = strcat(Name22, ".mat");
+    ModelName4 = strcat(Name4, ".mat");
+    ModelName0 = strcat(Name0, ".mat");
+
+    if exist(ModelName1, 'file')
         
         Model_Mat1 = load(ModelName1);
         Model_Mat21 = load(ModelName21);
@@ -160,14 +160,51 @@ for i = 1 : 89
         R0(k, 6) = Threshold0;
         
         k = k + 1;
+        
+        if (i == 138)
+            Temp1 = R1;
+            Temp21 = R21;
+            Temp22 = R22;
+            Temp4 = R4;
+            Temp0 = R0;
+            Temp1(k, :) = sum(Temp1) / (k-1);
+            Temp21(k, :) = sum(Temp21) / (k-1);
+            Temp22(k, :) = sum(Temp22) / (k-1);
+            Temp4(k, :) = sum(Temp4) / (k-1);
+            Temp0(k, :) = sum(Temp0) / (k-1);
+            csvwrite("TrainedHG/SVM/Result/Portrait1F.csv", Temp1);
+            csvwrite("TrainedHG/SVM/Result/Portrait2F1.csv", Temp21);
+            csvwrite("TrainedHG/SVM/Result/Portrait2F2.csv", Temp22);
+            csvwrite("TrainedHG/SVM/Result/Portrait4F.csv", Temp4);
+            csvwrite("TrainedHG/SVM/Result/Portrait29F.csv", Temp0);
+            flag = k;
+        end
+        
+        if (i == 197)
+            Temp1 = R1(flag:k-1, :);
+            Temp21 = R21(flag:k-1, :);
+            Temp22 = R22(flag:k-1, :);
+            Temp4 = R4(flag:k-1, :);
+            Temp0 = R0(flag:k-1, :);
+            Temp1(k-flag+1, :) = sum(Temp1) / (k-flag);
+            Temp21(k-flag+1, :) = sum(Temp21) / (k-flag);
+            Temp22(k-flag+1, :) = sum(Temp22) / (k-flag);
+            Temp4(k-flag+1, :) = sum(Temp4) / (k-flag);
+            Temp0(k-flag+1, :) = sum(Temp0) / (k-flag);
+            csvwrite("TrainedHG/SVM/Result/Landscape1F.csv", Temp1);
+            csvwrite("TrainedHG/SVM/Result/Landscape2F1.csv", Temp21);
+            csvwrite("TrainedHG/SVM/Result/Landscape2F2.csv", Temp22);
+            csvwrite("TrainedHG/SVM/Result/Landscape4F.csv", Temp4);
+            csvwrite("TrainedHG/SVM/Result/Landscape29F.csv", Temp0);
+        end
 
     end
 end
 
-R1(k, :) = sum(R1) / (k-1);
-R21(k, :) = sum(R21) / (k-1);
-R22(k, :) = sum(R22) / (k-1);
-R4(k, :) = sum(R4) / (k-1);
-R0(k, :) = sum(R0) / (k-1);
+% R1(k, :) = sum(R1) / (k-1);
+% R21(k, :) = sum(R21) / (k-1);
+% R22(k, :) = sum(R22) / (k-1);
+% R4(k, :) = sum(R4) / (k-1);
+% R0(k, :) = sum(R0) / (k-1);
 
 

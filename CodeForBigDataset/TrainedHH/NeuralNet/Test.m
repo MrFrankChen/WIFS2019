@@ -8,23 +8,21 @@ F3 = [24, 16, 12, 22, 26, 17, 13, 29, 21, 28, 2, 25, 3, 8, 27];
 
 F0 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
 
-M = [1,3,6,8,14,16,23,26,28,29,33,35,38,46,53,58,67,75,77,81,82,89];
-
 load("TrainedHH/NeuralNet/Threshold.mat", 'Threshold');
 
-for i = 1 : 89
-    if (ismember(i, M))
+for i = 1 : 197
 
-        Name1 = strcat("TrainedHH/NeuralNet/Net8F/Net", num2str(i));
-        Name2 = strcat("TrainedHH/NeuralNet/Net10F/Net", num2str(i));
-        Name3 = strcat("TrainedHH/NeuralNet/Net15F/Net", num2str(i));
-        Name0 = strcat("TrainedHH/NeuralNet/Net29F/Net", num2str(i));
+    Name1 = strcat("TrainedHH/NeuralNet/Net8F/Net", num2str(i));
+    Name2 = strcat("TrainedHH/NeuralNet/Net10F/Net", num2str(i));
+    Name3 = strcat("TrainedHH/NeuralNet/Net15F/Net", num2str(i));
+    Name0 = strcat("TrainedHH/NeuralNet/Net29F/Net", num2str(i));
+
+    NetName1 = strcat(Name1, ".mat");
+    NetName2 = strcat(Name2, ".mat");
+    NetName3 = strcat(Name3, ".mat");
+    NetName0 = strcat(Name0, ".mat");
         
-        NetName1 = strcat(Name1, ".mat");
-        NetName2 = strcat(Name2, ".mat");
-        NetName3 = strcat(Name3, ".mat");
-        NetName0 = strcat(Name0, ".mat");
-        
+    if exist(NetName1,"file")
         Net_Mat1 = load(NetName1);
         Net_Mat2 = load(NetName2);
         Net_Mat3 = load(NetName3);
@@ -36,9 +34,8 @@ for i = 1 : 89
         Net0 = Net_Mat0.net0;
 
         % Test 1
-        TestName = strcat("Dataset/HH/Test1/Test", num2str(i));
-%         TestName = strcat("Dataset/HH/Test2/Test", num2str(i));
-%         TestName = strcat("Dataset/HH/Test3/Test", num2str(i));
+%         TestName = strcat("Dataset/HH/Test1/Test", num2str(i));
+        TestName = strcat("Dataset/HH/Test2/Test", num2str(i));
 
         TestName = strcat(TestName, ".csv");
         TestData = csvread(TestName);
@@ -140,11 +137,50 @@ for i = 1 : 89
         
 
         k = k + 1;
+        
+        if (i == 138)
+            Temp1 = R1;
+            Temp2 = R2;
+            Temp3 = R3;
+            Temp0 = R0;
+            Temp1(k, :) = sum(Temp1) / (k-1);
+            Temp2(k, :) = sum(Temp2) / (k-1);
+            Temp3(k, :) = sum(Temp3) / (k-1);
+            Temp0(k, :) = sum(Temp0) / (k-1);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Portrait8F.csv", Temp1);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Portrait10F.csv", Temp2);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Portrait15F.csv", Temp3);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Portrait29F.csv", Temp0);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Portrait8F.csv", Temp1);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Portrait10F.csv", Temp2);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Portrait15F.csv", Temp3);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Portrait29F.csv", Temp0);
+            flag = k;
+        end
+        
+        if (i == 197)
+            Temp1 = R1(flag:k-1, :);
+            Temp2 = R2(flag:k-1, :);
+            Temp3 = R3(flag:k-1, :);
+            Temp0 = R0(flag:k-1, :);
+            Temp1(k-flag+1, :) = sum(Temp1) / (k-flag);
+            Temp2(k-flag+1, :) = sum(Temp2) / (k-flag);
+            Temp3(k-flag+1, :) = sum(Temp3) / (k-flag);
+            Temp0(k-flag+1, :) = sum(Temp0) / (k-flag);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Landscape8F.csv", Temp1);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Landscape10F.csv", Temp2);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Landscape15F.csv", Temp3);
+%             csvwrite("TrainedHH/NeuralNet/Result/Test1/Landscape29F.csv", Temp0);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Landscape8F.csv", Temp1);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Landscape10F.csv", Temp2);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Landscape15F.csv", Temp3);
+            csvwrite("TrainedHH/NeuralNet/Result/Test2/Landscape29F.csv", Temp0);
+        end
 
     end
 end
 
-R1(k, :) = sum(R1) / (k-1);
-R2(k, :) = sum(R2) / (k-1);
-R3(k, :) = sum(R3) / (k-1);
-R0(k, :) = sum(R0) / (k-1);
+% R1(k, :) = sum(R1) / (k-1);
+% R2(k, :) = sum(R2) / (k-1);
+% R3(k, :) = sum(R3) / (k-1);
+% R0(k, :) = sum(R0) / (k-1);

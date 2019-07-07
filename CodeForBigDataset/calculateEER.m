@@ -1,9 +1,12 @@
-function [EER, Threshold] = calculateEER(Score)
+function [EER, Threshold] = calculateEER(Score, flag)
 
 [m,n]=find(isnan(Score)); 
 Score(m,:)=[]; 
-Score = sortrows(Score, -1);
-% Score = sortrows(Score, -2);
+if (flag == 1)
+    Score = sortrows(Score, -1);
+elseif (flag == 2)
+    Score = sortrows(Score, -2);
+end
 % Score = unique(Score, 'row');
 
 

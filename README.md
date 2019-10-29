@@ -1,2 +1,2 @@
 # WIFS2019
-Code for paper "Robotic Attack Detection System" 
+Code for paper "GAN Based Attacks on the User’s Touch Screens: A Tale of Adversarial Samples" 

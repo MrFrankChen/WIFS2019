@@ -9,14 +9,22 @@ for i = 1 : 197
         GenuineTraining = csvread(FileName);
         [m1, n1] = size(GenuineTraining);
         
-        ImposterTraining = SelectFromOtherUser(i, 0, m1);
+        if (i <= 139)
+            ImposterTraining = SelectFromOtherUser(i, 0, 0, m1);
+        else
+            ImposterTraining = SelectFromOtherUser(i, 0, 1, m1);
+        end
         
         Name = strcat("Dataset/Human/Test/Human", num2str(i));
         FileName = strcat(Name, ".csv");
         GenuineTesting = csvread(FileName);
         [m2, n2] = size(GenuineTesting);
         
-        ImposterTesting1 = SelectFromOtherUser(i, 1, m2);
+        if (i <= 139)
+            ImposterTesting1 = SelectFromOtherUser(i, 1, 0, m2);
+        else
+            ImposterTesting1 = SelectFromOtherUser(i, 1, 1, m2);
+        end
         
         GenuineTraining(:, 30) = 0;
         GenuineTesting(:, 30) = 0;

@@ -1,16 +1,26 @@
-function Matrix = SelectFromOtherUser(current, TrainOrTest, k)
+function Matrix = SelectFromOtherUser(current, TrainOrTest, POrL, k)
 % Train - 0
 % Test - 1
+% Portrait - 0
+% Landscape - 1
+
+if (POrL == 0)
+    m = 1;
+    n = 138;
+else
+    m = 139;
+    n = 197;
+end
 
 selected = 0;
-i = 1;
+i = m;
 row = 1;
 
 if (TrainOrTest == 0)
     
     while (selected ~= k)
-        if (i >= 89)
-            i = 1;
+        if (i >= n)
+            i = m;
             row = row + 1;
         end
         
@@ -26,7 +36,7 @@ if (TrainOrTest == 0)
             continue;
         end
         
-        Name = strcat("Dataset/Human/Train/Human", num2str(i));
+        Name = strcat("Dataset/Human/Whole/Train/Human", num2str(i));
         FileName = strcat(Name, ".csv");
         if exist(FileName, 'file')
             Data = csvread(FileName);
@@ -42,8 +52,8 @@ if (TrainOrTest == 0)
 else 
 
     while (selected ~= k)
-        if (i >= 89)
-            i = 1;
+        if (i >= n)
+            i = m;
             row = row + 1;
         end
         
@@ -59,7 +69,7 @@ else
             continue;
         end
         
-        Name = strcat("Dataset/Human/Test/Human", num2str(i));
+        Name = strcat("Dataset/Human/Whole/Test/Human", num2str(i));
         FileName = strcat(Name, ".csv");
         if exist(FileName, 'file')
             Data = csvread(FileName);
